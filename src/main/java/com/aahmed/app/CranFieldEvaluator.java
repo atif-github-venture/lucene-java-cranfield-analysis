@@ -110,7 +110,7 @@ public class CranFieldEvaluator {
                     relevance_base.add(set);
                     set = new HashSet<>();
                 }
-                if (relevance <= 3) {
+                if (relevance <= 2) {
                     set.add(documentId);
                 }
             }

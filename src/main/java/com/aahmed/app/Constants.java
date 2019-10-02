@@ -3,7 +3,6 @@ package com.aahmed.app;
 class Constants {
     static final String CONTENTS = "contents";
     static final String FILE_NAME = "filename";
-    static final String FILE_PATH = "filepath";
     static final int MAX_SEARCH = 10;
     static final String indexDir = "target/index_cranfield";
     static final String dataDir = "./src/main/resources/cranfield/cranfield.dat";

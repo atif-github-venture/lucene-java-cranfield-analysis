@@ -34,23 +34,6 @@ class Indexer {
         writer.close();
     }
 
-    private Document getDocument(File file) throws IOException {
-        Document document = new Document();
-
-        //index file contents
-        Field contentField = new Field(Constants.CONTENTS, new String(Files.readAllBytes(Paths.get(file.getPath()))), TextField.TYPE_STORED);
-        //index file name
-        Field fileNameField = new Field(Constants.FILE_NAME, file.getName(), TextField.TYPE_STORED);
-        //index file path
-        Field filePathField = new Field(Constants.FILE_PATH, file.getCanonicalPath(), TextField.TYPE_STORED);
-
-        document.add(contentField);
-        document.add(fileNameField);
-        document.add(filePathField);
-
-        return document;
-    }
-
     private Document getDocument(String doc, int index) throws IOException {
         Document document = new Document();
         //index file contents
@@ -61,33 +44,9 @@ class Indexer {
         return document;
     }
 
-    private void indexFile(File file) throws IOException {
-        System.out.println("Indexing " + file.getCanonicalPath());
-        Document document = getDocument(file);
-        writer.addDocument(document);
-    }
-
     private void indexFile(String doc, int index) throws IOException {
         Document document = getDocument(doc, index);
         writer.addDocument(document);
-    }
-
-    int createIndex(String dataDirPath, FileFilter filter) throws IOException {
-        //get all files in the data directory
-        File[] files = new File(dataDirPath).listFiles();
-
-        assert files != null;
-        for (File file : files) {
-            if (!file.isDirectory()
-                    && !file.isHidden()
-                    && file.exists()
-                    && file.canRead()
-                    && filter.accept(file)
-            ) {
-                indexFile(file);
-            }
-        }
-        return writer.getDocStats().numDocs;
     }
 
     int createIndex(String dataDirPath) throws IOException {
